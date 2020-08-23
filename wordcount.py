@@ -25,29 +25,49 @@ should return a dictionary with words as keys, and their counts as values.
 
 # Your name, plus anyone who helped you with this assignment
 # Give credit where credit is due.
-__author__ = "???"
+__author__ = """Darrell Purcell with help from
+                https://www.geeksforgeeks.org/
+                list-methods-in-python-set-1-in-not-in-len-min-max/
+                and Coach John for correcting right side of
+                if/else statements in create_word_dict
+                from = word_list.count(word) to = 1"""
 
 import sys
 
 
 def create_word_dict(filename):
     """Returns a word/count dict for the given file."""
-    # Your code here
-    return
+    word_dict = {}
+    with open(filename, 'r') as f:
+        for line in f:
+            lowercase_string = line.lower()
+            word_list = lowercase_string.split()
+            for word in word_list:
+                if word not in word_dict.keys():
+                    word_dict[word] = 1
+                else:
+                    word_dict[word] += 1
+    return word_dict
 
 
 def print_words(filename):
     """Prints one per line '<word> : <count>', sorted
     by word for the given file.
     """
-    # Your code here
-    return
+    word_dict = create_word_dict(filename)
+
+    dict_keys = list(word_dict.keys())
+    dict_keys.sort(key=str.lower)
+
+    for i in dict_keys:
+        print(i, ' : ', word_dict[i])
 
 
 def print_top(filename):
     """Prints the top count listing for the given file."""
-    # Your code here
-    return
+    word_dict = create_word_dict(filename)
+    word_dict_sorted = sorted(word_dict.items(), key=lambda x: x[-1])
+    [print(i[0], " : ", i[1]) for i in word_dict_sorted[:-21:-1]]
 
 
 # This basic command line argument parsing code is provided and calls
